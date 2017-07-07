@@ -6,8 +6,6 @@ from urllib.request import urlretrieve
 from bs4 import BeautifulSoup
 import requests
 
-NUMBER_IMG = 20 #Every x iterations it asks the user to keep going or not
-
 def get_company():
 	comp = input("Marvel or DC? ")
 	assert comp.upper() == "MARVEL" or comp.upper() == "DC"
@@ -82,7 +80,6 @@ def get_images(company, link):
 
 def download(company, img):
 	req = requests.get(get_img_link(company, img))
-	print(get_img_link(company,img))
 	html = req.content
 	soup = BeautifulSoup(html, "lxml")
 	for link in soup.findAll('a'):
@@ -100,19 +97,7 @@ def main():
 	cbseries = select_volume(company, character)
 	link = select_type(company, cbseries)
 	images = get_images(company, link)
-	keepgoing = True
-	counter = 0
-	while keepgoing:
-		for i in range(counter,counter+NUMBER_IMG):
-			if i<len(images): download(company,images[i])
-		selection = input("Keep going? (y/n) ")
-		if selection.lower() == "y": 
-			keepgoingepgoing = True
-			counter+=1
-		else:
-			keepgoing = False
+	for img in images:
+		download(company, img)
 		
-main()	
-	
-	
-	
+main()
