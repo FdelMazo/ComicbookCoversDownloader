@@ -1,4 +1,5 @@
 #F del Mazo - initial commit July 2017
+#https://github.com/FdelMazo/
 
 import pip
 try:
