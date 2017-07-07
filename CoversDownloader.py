@@ -81,6 +81,7 @@ def download(img):
 			print("Downloaded: {}".format(title))
 			
 def main():
+	print("The COMPANY is currently set on {}".format(COMPANY))
 	character = input("\n Write a character or a comicbook series: ")
 	cbseries = select_volume(character)
 	link = select_type(cbseries)
