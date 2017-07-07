@@ -6,22 +6,35 @@ from urllib.request import urlretrieve
 from bs4 import BeautifulSoup
 import requests
 
-COMPANY = "DC"
-if COMPANY == "DC":
-	BASE = "http://dc.wikia.com/"
-	VOLUME_SEARCHER = "index.php?title=Category:Volumes&from="
-	
-if COMPANY == "MARVEL":
-	BASE = "http://marvel.wikia.com/"
-	VOLUME_SEARCHER = "/wiki/Category:Comic_Lists?pagefrom="
-
 NUMBER_IMG = 20 #Every x iterations it asks the user to keep going or not
 
+def get_company():
+	comp = input("Marvel or DC? ")
+	assert comp.upper() == "MARVEL" or comp.upper() == "DC"
+	return comp.upper()
 
-def select_volume(character):
+def get_base(company):
+	if company == "DC":
+		return "http://dc.wikia.com/"
+	elif company == "MARVEL":
+		return "http://marvel.wikia.com/"
+
+def get_searcher(company):
+	if company == "DC":
+		return "index.php?title=Category:Volumes&from="
+	elif company == "MARVEL":
+		return "wiki/Category:Comic_Lists?pagefrom="	
+		
+def get_img_link(company, img):
+	if get_base(company) not in img:
+		return get_base(company)+img
+	else:
+		return img
+	
+def select_volume(company, character):
 	initial_letters = character[:2]
-	short_url = VOLUME_SEARCHER +"{}".format(initial_letters)
-	req = requests.get(BASE+short_url)
+	short_url = get_searcher(company) +"{}".format(initial_letters)
+	req = requests.get(get_base(company)+short_url)
 	html = req.content
 	soup = BeautifulSoup(html, "lxml")
 	possible_links = []
@@ -37,14 +50,14 @@ def select_volume(character):
 	selected_link = possible_links[int(selection)-1]
 	return selected_link.get('href')
 
-def select_type(cbseries):
-	if COMPANY == "MARVEL": return cbseries
-	req = requests.get(BASE+cbseries)
+def select_type(company, cbseries):
+	if company == "MARVEL": return cbseries
+	req = requests.get(get_base(company)+cbseries)
 	html = req.content
 	soup = BeautifulSoup(html, "lxml")
 	possible_links = []
 	for link in soup.findAll('a'):
-		if "cover" in str(link.get('href')).lower() and link not in possible_links:
+		if "cover" in str(link.get('href')).lower() and not [linkx for linkx in possible_links if link.get('title') in linkx.get('title')]:
 			possible_links.append(link)
 	if not possible_links:
 		raise Exception("No covers found")
@@ -55,8 +68,8 @@ def select_type(cbseries):
 	selected_link = possible_links[int(selection)-1]
 	return selected_link.get('href')
 
-def get_images(link):
-	req = requests.get(BASE+link)
+def get_images(company, link):
+	req = requests.get(get_base(company)+link)
 	html = req.content
 	soup = BeautifulSoup(html, "lxml")
 	images = []
@@ -67,8 +80,9 @@ def get_images(link):
 		raise Exception("No covers found")
 	return images
 
-def download(img):
-	req = requests.get(BASE+img)
+def download(company, img):
+	req = requests.get(get_img_link(company, img))
+	print(get_img_link(company,img))
 	html = req.content
 	soup = BeautifulSoup(html, "lxml")
 	for link in soup.findAll('a'):
@@ -81,17 +95,17 @@ def download(img):
 			print("Downloaded: {}".format(title))
 			
 def main():
-	print("The COMPANY is currently set on {}".format(COMPANY))
+	company = get_company()
 	character = input("\n Write a character or a comicbook series: ")
-	cbseries = select_volume(character)
-	link = select_type(cbseries)
-	images = get_images(link)
+	cbseries = select_volume(company, character)
+	link = select_type(company, cbseries)
+	images = get_images(company, link)
 	keepgoing = True
 	counter = 0
 	while keepgoing:
 		for i in range(counter,counter+NUMBER_IMG):
-			if(images[i]): download(images[i])
-		selection = input("Downloaded {} images. Keepgoing? (y/n) ".format(NUMBER_IMG))
+			if i<len(images): download(company,images[i])
+		selection = input("Keep going? (y/n) ")
 		if selection.lower() == "y": 
 			keepgoingepgoing = True
 			counter+=1
