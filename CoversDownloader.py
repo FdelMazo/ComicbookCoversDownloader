@@ -6,7 +6,7 @@ from urllib.request import urlretrieve
 from bs4 import BeautifulSoup
 import requests
 
-COMPANY = "MARVEL"
+COMPANY = "DC"
 if COMPANY == "DC":
 	BASE = "http://dc.wikia.com/"
 	VOLUME_SEARCHER = "index.php?title=Category:Volumes&from="

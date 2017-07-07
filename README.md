@@ -8,5 +8,7 @@ Before getting started you must have installed BeautifulSoup, lxml and requests.
 	
 This easy and light program does the following:
 	- Prompts you a character name or comicbook series
-	- Asks which of the found would you like
+	- Asks which of the found series would you like
 	- Downloads every cover found in the wikia for that series
+	
+Important: The constant at line 9 is the one that determines which wikia the program will scrape. You must modify it if you want other results.
