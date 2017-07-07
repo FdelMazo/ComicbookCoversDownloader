@@ -1,10 +1,14 @@
 #F del Mazo - initial commit July 2017
 
-#REQS: pip install: beautifulsoup4, lxml, requests
-
-from urllib.request import urlretrieve
-from bs4 import BeautifulSoup
-import requests
+import pip
+try:
+	from urllib.request import urlretrieve
+	from bs4 import BeautifulSoup
+	import requests
+except ImportError:
+	pip.main(['install', requests])
+	pip.main(['install', beautifulSoup4])
+	pip.main(['install', lxml])
 
 def get_company():
 	comp = input("Marvel or DC? ")
