@@ -4,11 +4,12 @@ import pip
 try:
 	from urllib.request import urlretrieve
 	from bs4 import BeautifulSoup
+	import lxml
 	import requests
-except ImportError:
-	pip.main(['install', requests])
-	pip.main(['install', beautifulSoup4])
-	pip.main(['install', lxml])
+except (ImportError, ModuleNotFoundError):
+	pip.main(['install', 'requests'])
+	pip.main(['install', 'beautifulSoup4'])
+	pip.main(['install', 'lxml'])
 
 def get_company():
 	comp = input("Marvel or DC? ")
