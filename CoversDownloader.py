@@ -1,13 +1,15 @@
 #F del Mazo - initial commit July 2017
 #https://github.com/FdelMazo/
 
+#First time use must be with admin rights for pip to install properly
 import pip
 try:
 	from urllib.request import urlretrieve
 	from bs4 import BeautifulSoup
 	import lxml
 	import requests
-except (ImportError, ModuleNotFoundError):
+except:
+	print("Remember to have admin/sudo rights!")
 	pip.main(['install', 'requests'])
 	pip.main(['install', 'beautifulSoup4'])
 	pip.main(['install', 'lxml'])
