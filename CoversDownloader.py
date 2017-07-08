@@ -2,7 +2,14 @@
 #https://github.com/FdelMazo/
 
 #First time use must be with admin rights for pip to install properly
-import pip
+
+import sys
+try:
+	import pip
+except ImportError:
+	print("You must have pip installed: Refer to https://pip.pypa.io/en/stable/installing/")
+	sys.exit()
+
 try:
 	from urllib.request import urlretrieve
 	from bs4 import BeautifulSoup
@@ -10,10 +17,9 @@ try:
 	import requests
 	import string
 except ImportError:
-	print("Remember to have admin/sudo rights!")
-	pip.main(['install', 'requests'])
-	pip.main(['install', 'beautifulSoup4'])
-	pip.main(['install', 'lxml'])
+	pip.main(['install', '--user', 'beautifulSoup4'])
+	pip.main(['install', '--user', 'requests'])
+	pip.main(['install', '--user', 'lxml'])
 
 def get_company():
 	comp = input("Marvel or DC? ")
