@@ -8,7 +8,8 @@ try:
 	from bs4 import BeautifulSoup
 	import lxml
 	import requests
-except:
+	import string
+except ImportError:
 	print("Remember to have admin/sudo rights!")
 	pip.main(['install', 'requests'])
 	pip.main(['install', 'beautifulSoup4'])
@@ -50,14 +51,38 @@ def select_volume(company, character):
 		if any(word in str(link.get('title')) for word in character_lst) and link not in possible_links:
 			possible_links.append(link)
 	if not possible_links:
-		raise Exception("No series found")
+		print("No series found")
+		return deep_volume_search(company, character)
+	for i,link in enumerate(possible_links,1):
+		print("{} - {}".format(i, link.get('title')))
+	selection = input("\n Which series? (write number or 'deep search') ")
+	if selection in "deep search": return deep_volume_search(company,character)
+	assert selection.isdigit() or 0 <= int(selection) < len(possible_links)
+	selected_link = possible_links[int(selection)-1]
+	return selected_link.get('href')
+
+def deep_volume_search(company, character):
+	print("Deep search will be executed now. Keep in mind it's a little bit slower")
+	all_letters = sorted(list(string.ascii_lowercase) + [x+'m' for x in string.ascii_lowercase])
+	possible_links = []
+	for letter in all_letters:
+		short_url = get_searcher(company) +"{}".format(letter)
+		req = requests.get(get_base(company)+short_url)
+		html = req.content
+		soup = BeautifulSoup(html, "lxml")
+		character_lst = character.split(' ')
+		character_lst = list(map(lambda x: x.title(), character_lst))
+		for link in soup.findAll('a'):
+			if any(word in str(link.get('title')) for word in character_lst) and link not in possible_links:
+				possible_links.append(link)
+	if not possible_links: raise ValueError("No series found. Try again with the other company")
 	for i,link in enumerate(possible_links,1):
 		print("{} - {}".format(i, link.get('title')))
 	selection = input("\n Which series? (write number) ")
 	assert selection.isdigit() or 0 <= int(selection) < len(possible_links)
 	selected_link = possible_links[int(selection)-1]
-	return selected_link.get('href')
-
+	return selected_link.get('href')	
+	
 def select_type(company, cbseries):
 	if company == "MARVEL": return cbseries
 	req = requests.get(get_base(company)+cbseries)
