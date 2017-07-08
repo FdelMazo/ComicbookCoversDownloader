@@ -1,8 +1,6 @@
 #F del Mazo - initial commit July 2017
 #https://github.com/FdelMazo/
 
-#First time use must be with admin rights for pip to install properly
-
 import sys
 try:
 	import pip
