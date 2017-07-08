@@ -44,8 +44,10 @@ def select_volume(company, character):
 	html = req.content
 	soup = BeautifulSoup(html, "lxml")
 	possible_links = []
+	character_lst = character.split(' ')
+	character_lst = list(map(lambda x: x.title(), character_lst))
 	for link in soup.findAll('a'):
-		if character.title() in str(link.get('title')) and link not in possible_links:
+		if any(word in str(link.get('title')) for word in character_lst) and link not in possible_links:
 			possible_links.append(link)
 	if not possible_links:
 		raise Exception("No series found")
