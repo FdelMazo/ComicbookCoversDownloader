@@ -2,6 +2,8 @@
 #https://github.com/FdelMazo/
 
 import sys
+import os
+import shutil
 try:
 	import pip
 except ImportError:
@@ -62,10 +64,10 @@ def select_volume(company, character):
 		print("{} - {}".format(i, link.get('title')))
 	selection = input("\n Which series? (write number or 'deep search') ")
 	if selection in "deep search": return deep_volume_search(company,character)
-	while not selection.isdigit() or not 0 <= int(selection) < len(possible_links):
+	while not selection.isdigit() or not 0 < int(selection) <= len(possible_links):
 		selection = input("Try again. Just write the number or 'deep search': ")
 	selected_link = possible_links[int(selection)-1]
-	return selected_link.get('href')
+	return selected_link
 
 def deep_volume_search(company, character):
 	print("Deep search will be executed now. Keep in mind it's a little bit slower")
@@ -85,13 +87,14 @@ def deep_volume_search(company, character):
 	for i,link in enumerate(possible_links,1):
 		print("{} - {}".format(i, link.get('title')))
 	selection = input("\n Which series? (write number) ")
-	while not selection.isdigit() or not 0 <= int(selection) < len(possible_links):
+	while not selection.isdigit() or not 0 < int(selection) <= len(possible_links):
 		selection = input("Try again. Just write the number: ")
 	selected_link = possible_links[int(selection)-1]
-	return selected_link.get('href')	
+	return selected_link	
 	
 def select_type(company, cbseries):
 	if company == "MARVEL": return cbseries
+	cbseries = cbseries.get('href')
 	req = requests.get(get_base(company)+cbseries)
 	html = req.content
 	soup = BeautifulSoup(html, "lxml")
@@ -104,12 +107,13 @@ def select_type(company, cbseries):
 	for i,link in enumerate(possible_links,1):
 		print("{} - {}".format(i, link.get('title')))
 	selection = input("\n Which type of cover? (write number) ")
-	while not selection.isdigit() or not 0 <= int(selection) < len(possible_links):
+	while not selection.isdigit() or not 0 < int(selection) <= len(possible_links):
 		selection = input("Try again. Just write the number: ")
 	selected_link = possible_links[int(selection)-1]
-	return selected_link.get('href')
-
+	return selected_link
+	
 def get_images(company, link):
+	link = link.get('href')
 	req = requests.get(get_base(company)+link)
 	html = req.content
 	soup = BeautifulSoup(html, "lxml")
@@ -133,14 +137,27 @@ def download(company, img):
 			title = img.split(':')[-1]
 			urlretrieve(link.get('href'), title)
 			print("Downloaded: {}".format(title))
-			
+			return title
+
+def create_dir(link):
+	link = link.get('title')
+	link = link.replace('/','_')
+	if not os.path.exists(link):
+		os.mkdir(link)
+	return link
+	
+def move(title, dir):
+	shutil.move(title, dir)
+	
 def main():
 	company = get_company()
 	character = input("\n Write a character or a comicbook series: ")
 	cbseries = select_volume(company, character)
 	link = select_type(company, cbseries)
 	images = get_images(company, link)
+	dir = create_dir(link)
 	for img in images:
-		download(company, img)
+		title = download(company, img)
+		move(title, dir)
 		
 main()
