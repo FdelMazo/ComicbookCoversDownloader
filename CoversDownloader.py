@@ -141,7 +141,7 @@ def download(company, img):
 
 def create_dir(link):
 	link = link.get('title')
-	link = link.replace('/','_')
+	link = link.replace('/','_').replace(':','_').replace('"','_')
 	if not os.path.exists(link):
 		os.mkdir(link)
 	return link
