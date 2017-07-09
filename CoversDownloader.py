@@ -113,7 +113,7 @@ def select_type(company, cbseries):
 	return selected_link
 	
 def get_images(company, link):
-	link = link.get('href')
+	link = link.get('href')+"?display=page"
 	req = requests.get(get_base(company)+link)
 	html = req.content
 	soup = BeautifulSoup(html, "lxml")
@@ -147,7 +147,10 @@ def create_dir(link):
 	return link
 	
 def move(title, dir):
-	shutil.move(title, dir)
+	try:
+		shutil.move(title, dir)
+	except:
+		pass
 	
 def main():
 	company = get_company()
