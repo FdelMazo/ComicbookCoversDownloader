@@ -21,7 +21,8 @@ except ImportError:
 
 def get_company():
 	comp = input("Marvel or DC? ")
-	assert comp.upper() == "MARVEL" or comp.upper() == "DC"
+	while comp.upper() != "MARVEL" and comp.upper() != "DC":
+		comp = input("Try again. Just write Marvel or DC: ")
 	return comp.upper()
 
 def get_base(company):
@@ -61,7 +62,8 @@ def select_volume(company, character):
 		print("{} - {}".format(i, link.get('title')))
 	selection = input("\n Which series? (write number or 'deep search') ")
 	if selection in "deep search": return deep_volume_search(company,character)
-	assert selection.isdigit() or 0 <= int(selection) < len(possible_links)
+	while not selection.isdigit() or not 0 <= int(selection) < len(possible_links):
+		selection = input("Try again. Just write the number or 'deep search': ")
 	selected_link = possible_links[int(selection)-1]
 	return selected_link.get('href')
 
@@ -83,7 +85,8 @@ def deep_volume_search(company, character):
 	for i,link in enumerate(possible_links,1):
 		print("{} - {}".format(i, link.get('title')))
 	selection = input("\n Which series? (write number) ")
-	assert selection.isdigit() or 0 <= int(selection) < len(possible_links)
+	while not selection.isdigit() or not 0 <= int(selection) < len(possible_links):
+		selection = input("Try again. Just write the number: ")
 	selected_link = possible_links[int(selection)-1]
 	return selected_link.get('href')	
 	
@@ -101,7 +104,8 @@ def select_type(company, cbseries):
 	for i,link in enumerate(possible_links,1):
 		print("{} - {}".format(i, link.get('title')))
 	selection = input("\n Which type of cover? (write number) ")
-	assert selection.isdigit() or 0 <= int(selection) < len(possible_links)
+	while not selection.isdigit() or not 0 <= int(selection) < len(possible_links):
+		selection = input("Try again. Just write the number: ")
 	selected_link = possible_links[int(selection)-1]
 	return selected_link.get('href')
 
