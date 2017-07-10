@@ -149,4 +149,4 @@ def main():
 flag = "run"
 while flag == "run":
 	main()
-	input("Press any key to exit or 'run' to run again: ")	
+	flag = input("Press any key to exit or 'run' to run again: ")	
