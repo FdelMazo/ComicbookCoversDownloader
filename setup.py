@@ -7,7 +7,7 @@ from cx_Freeze import setup, Executable
 build_exe_options = {
 	"packages": ["bs4", "sys", "shutil", "lxml", "os", "requests", "queue", "idna"],
 	"includes": ["Wikias"],
-	"include_files": ["README.md", "Future.txt", "CoversDownloader.py", "setup.py"]}
+	"include_files": ["readme.txt"]}
 
 setup(  name = "Comicbook Covers Downloader",
         version = "1.0",
