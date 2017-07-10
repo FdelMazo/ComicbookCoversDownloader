@@ -1,22 +1,21 @@
 # ComicbookCovers
 Webscraper for DC, Marvel and more Comicbook Wikias to download CB covers.
 
-Keep in mind, I don't encourage downloading several times in a short time span, as the wikias tend to get angry when you request them so many images at once.
-Try to space out your downloads
+Keep in mind, I don't encourage downloading several times in a short time span, as the wikias tend to get angry when you request them so many images at once. Try to space out your downloads
 
 This easy and light program does the following:
-* Asks you a character name or comicbook series
+* Asks you a character name or comicbook series and the respective publishing company
 * Asks which of the found series would you like
 * Downloads every cover found in the wikia for that series
 
-Windows users:
-* Download the latest release (under 'releases') and start (or extract) the executable.
-* After that, just start the CoversDownloader.exe
+Windows and Linux users:
+* Download from 'releases' the latest one and extract everything
+* After that, just start the CoversDownloader.exe (Windows) or write ./CoversDownloader in the terminal (Linux)
 
-Python users:
-* Just download both "CoversDownloader.py" and "Wikias.py" and write 'python CoversDownloader.py'
+If you want to tweak and see the source code (written in Python 3.6):
+* Just download from the repo page both "CoversDownloader.py" and "Wikias.py" and write 'python CoversDownloader.py'
 
 Next up for the program is:
 * Download per artist, regardless of the company
 * GUI
-* More OS executables
+

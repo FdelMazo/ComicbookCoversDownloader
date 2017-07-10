@@ -88,7 +88,6 @@ def get_images(wiki, link):
 	soup = request_soup(wiki.fix_link(link))
 	images = []
 	for link in soup.findAll('a',title=True,href=True):
-		print(link.get('href'))
 		if "File:" in str(link.get('href')):
 			if link.get('href') not in images: images.append(link.get('href'))
 	if not images:
@@ -116,7 +115,7 @@ def fix_name(name):
 	name = name.replace('/',' ').replace(':',' ').replace('"',' ').replace(' ',' ').strip()
 	name = name.split(' ')
 	if "Category" in name:
-		dir.remove("Category")
+		name.remove("Category")
 	return ' '.join(name)
 			
 def create_dir(wiki, link):
