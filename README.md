@@ -18,6 +18,5 @@ Python users:
 
 Next up for the program is:
 * Download per artist, regardless of the company
-* More wikia providers (Image, IDW, etc)
 * GUI
 * More OS executables

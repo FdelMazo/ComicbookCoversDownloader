@@ -22,6 +22,7 @@ def request_soup(url):
 def volume_search_per_url(wiki, character, short_url=None):
 	possible_letter_links = []
 	if short_url == None: short_url = wiki.volume_search +"{}".format("'")
+	short_url = wiki.fix_link(short_url)
 	next_shorturl = False
 	soup = request_soup(wiki.fix_link(short_url))
 	character_lst = character.split(' ')
@@ -40,23 +41,24 @@ def volume_search(wikis, character):
 		possible_local_links = []
 		print("Currently searching in the {} Wiki".format(wiki))
 		next_url, list = volume_search_per_url(wiki,character)
+		if list: possible_local_links.extend(list)
 		while next_url:
-			next_url, list = volume_search_per_url(wiki,character,next_url)
 			possible_local_links.extend(list)
+			next_url, list = volume_search_per_url(wiki,character,next_url)
 		if not possible_local_links:
-			print("No series or characters found in the {} Wiki".format(wiki))
+			print("No series or characters found in the {} wiki".format(wiki))
 			break
 		possible_links.extend(possible_local_links)
-		print("\n From The {} Wiki:".format(wiki))
+		print("\n From The {} wiki:".format(wiki))
 		for i,tuple in enumerate(possible_local_links,counter):
 			link = tuple[1]
 			print("{} - {}".format(i, link.get('title')))
 		counter +=len(possible_local_links)
 	if not possible_links:
-		raise Exception("No series found")	
-	selection = input("\n OPTIONS: Write the number, write 'skip' or write 'deep' for even more series: ")
-	if selection.lower() in "skip": return False
-	if selection.lower() in "deeper": return deep_volume_search(wikis, character, LETTERS_DEEP)
+		print("No series found")
+		return False,False	
+	selection = input("\n Which series? (write number) ")
+	if selection.lower() in "skip":	return False,False
 	while not selection.isdigit() or not 0 < int(selection) <= len(possible_links):
 		selection = input("Try again. Just write the number: ")
 	selected_link = possible_links[int(selection)-1]
@@ -71,7 +73,8 @@ def select_type(wiki, cbseries):
 		if "cover" in str(link.get('href')).lower() and not [linkx for linkx in possible_links if link.get('title') in linkx.get('title')]:
 			possible_links.append(link)
 	if not possible_links:
-		raise Exception("No covers found")
+		print("No covers found")
+		return False
 	for i,link in enumerate(possible_links,1):
 		print("{} - {}".format(i, fix_name(link.get('title'))))
 	selection = input("\n Which type of cover? (write number) ")
@@ -85,10 +88,12 @@ def get_images(wiki, link):
 	soup = request_soup(wiki.fix_link(link))
 	images = []
 	for link in soup.findAll('a',title=True,href=True):
+		print(link.get('href'))
 		if "File:" in str(link.get('href')):
 			if link.get('href') not in images: images.append(link.get('href'))
 	if not images:
-		raise Exception("No covers found")
+		print("No covers found")
+		return False
 	return images
 
 def download(wiki, img):
@@ -133,18 +138,22 @@ def move(title, dir):
 def main():
 	character = input("\n Write a character or a comicbook series: ")
 	company_sel = [input("\n Which company? {} or ALL: ".format(', '.join(COMPANIES)))]
+	while company_sel[0].upper() not in COMPANIES and company_sel[0].upper() != "ALL":
+		company_sel = [input("\n No company with that name. Try again: ".format(', '.join(COMPANIES)))]
 	if company_sel[0].upper() == "ALL": company_sel = COMPANIES
 	wikis = []
 	for company in company_sel:
 		wikis.append(Wiki(company))
 	wiki, cbseries = volume_search(wikis, character)
-	if cbseries:
-		link = select_type(wiki, cbseries)
-		images = get_images(wiki, link)
-		dir = create_dir(wiki, link)
-		for img in images:
-			title = download(wiki, img)
-			if title: move(title, dir)
+	if not cbseries: return
+	link = select_type(wiki, cbseries)
+	if not link: return
+	images = get_images(wiki, link)
+	if not images: return
+	dir = create_dir(wiki, link)
+	for img in images:
+		title = download(wiki, img)
+		if title: move(title, dir)
 	
 flag = "run"
 while flag == "run":
