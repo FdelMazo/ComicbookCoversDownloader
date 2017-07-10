@@ -1,5 +1,6 @@
 # ComicbookCovers
 Webscraper for DC, Marvel and more Comicbook Wikias to download CB covers.
+Currently works with the wikias of: DC, Marvel, Dark Horse, Image, Valiant, Dynamite
 
 Keep in mind, I don't encourage downloading several times in a short time span, as the wikias tend to get angry when you request them so many images at once. Try to space out your downloads
 
