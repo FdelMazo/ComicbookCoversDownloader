@@ -10,11 +10,11 @@ This easy and light program does the following:
 * Downloads every cover found in the wikia for that series
 
 Windows users:
-*Download the 1.0 release (under 'releases') and start (or extract) the executable.
-*After that, just start the CoversDownloader.exe
+* Download the 1.0 release (under 'releases') and start (or extract) the executable.
+* After that, just start the CoversDownloader.exe
 
 Python users:
-*Just download both "CoversDownloader.py" and "Wikias.py" and write 'python CoversDownloader.py'
+* Just download both "CoversDownloader.py" and "Wikias.py" and write 'python CoversDownloader.py'
 
 Next up for the program is:
 * Download per artist, regardless of the company
