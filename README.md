@@ -9,11 +9,11 @@ This easy and light program does the following:
 * Asks which of the found series would you like
 * Downloads every cover found in the wikia for that series
 
-Windows users: 
+Windows users:
 *Download the 1.0 release (under 'releases') and start (or extract) the executable.
 *After that, just start the CoversDownloader.exe
 
-Python users: 
+Python users:
 *Just download both "CoversDownloader.py" and "Wikias.py" and write 'python CoversDownloader.py'
 
 Next up for the program is:
