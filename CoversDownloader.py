@@ -47,7 +47,7 @@ def volume_search(wikis, character):
 			next_url, list = volume_search_per_url(wiki,character,next_url)
 		if not possible_local_links:
 			print("No series or characters found in the {} wiki".format(wiki))
-			break
+			continue
 		possible_links.extend(possible_local_links)
 		print("\n From The {} wiki:".format(wiki))
 		for i,tuple in enumerate(possible_local_links,counter):
