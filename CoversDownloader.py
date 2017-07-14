@@ -50,7 +50,7 @@ def get_cbseries(wikis, search_type, search_terms, any_all):
 		possible_links.extend(possible_wiki_links)
 		print("\n From The {} wiki:".format(wiki))
 		for i,tuple in enumerate(possible_wiki_links,counter):
-			print("{} - {}".format(i, tuple[1].get('title')))
+			print("{} - {}".format(i, tuple[1].get('title').replace("Category:",'').replace("/",' ')))
 		counter +=len(possible_wiki_links)
 	if not possible_links:
 		print("No series found")
