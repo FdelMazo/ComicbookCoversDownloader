@@ -97,7 +97,7 @@ def character_or_series(search_type, any_all, term):
 		wikis = get_wikis(False)
 	wiki, link = get_cbseries(wikis, search_type, search_terms, any_all)
 	if not link: return
-	if search_type=="Series" or search_type=="Character":
+	if search_type=="Volume":
 		link = get_cover_type(wiki, link)
 	if not link: return
 	images = wiki.gallery_to_list_img(link.get('href'))
