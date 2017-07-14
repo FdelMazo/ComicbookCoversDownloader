@@ -6,8 +6,8 @@ from Wikias import *
 import sys
 import os
 import shutil
-
 INVALID_CHARACTERS = '/?<>\:*|" ' #Windows
+
 
 def solicitations():
 	solicits = input("\n Write a solicitation with COMPANY, MONTH, YEAR: ")
@@ -36,32 +36,24 @@ def solicitations():
 			except:
 				pass
 				
-def get_cbseries(wikis, search_type, search_terms, any_all):
-	possible_links, counter = [], 1
-	for wiki in wikis:
-		try:
-			possible_wiki_links = wiki.category_to_pages(search_type, search_terms, any_all)
-		except ConnectionError as e:
-			print(e)
-			continue
-		if not possible_wiki_links:
-			print("Nothing found on the {} wiki".format(wiki))
-			continue
-		possible_links.extend(possible_wiki_links)
-		print("\n From The {} wiki:".format(wiki))
-		for i,tuple in enumerate(possible_wiki_links,counter):
-			print("{} - {}".format(i, tuple[1].get('title').replace("Category:",'').replace("/",' ')))
-		counter +=len(possible_wiki_links)
+def get_cbseries(wiki, search_type, search_terms, any_all):
+	possible_links=[]
+	try:
+		possible_links = wiki.category_to_pages(search_type, search_terms, any_all)
+	except ConnectionError as e:
+		print(e)
+		return
 	if not possible_links:
 		print("No series found")
 		return False,False	
 	if len(possible_links)==1:
-		print("\n {} selected \n".format(possible_links[0][1].get('title')))
 		return possible_links[0]
-	selection = input("\n Which series? (write number or 'skip') ").lower()
-	while not selection.isdigit() or not 0 < int(selection) <= len(possible_links) and selection not in "skip":
-		if selection in "skip":	return False,False
-		selection = input("Try again. Just write the number or 'skip': ").lower()
+	for i,tuple in enumerate(possible_links,1):
+		print("{} - {}".format(i, tuple[1].get('title').replace("Category:",'').replace("/",' ')))
+	selection = input("\n Which series? (write number) ").lower()
+	while not selection.isdigit() or not 0 < int(selection) <= len(possible_links) and selection != "":
+		if selection == "":	return False,False
+		selection = input("Try again. Just write the number: ").lower()
 	selected_link = possible_links[int(selection)-1]
 	return selected_link	
 	
@@ -84,18 +76,16 @@ def get_cover_type(wiki, cbseries):
 	for i,link in enumerate(possible_links,1):
 		print("{} - {}".format(i, link.get('title').replace("Category:",'').replace("/",' ')))
 	selection = input("\n Which type of cover? (write number) ")
-	while not selection.isdigit() or not 0 < int(selection) <= len(possible_links):
-		selection = input("Try again. Just write the number: ")
+	while not selection.isdigit() or not 0 < int(selection) <= len(possible_links) and selection != "":
+		if selection == "":	return False
+		selection = input("Try again. Just write the number: ").lower()
 	selected_link = possible_links[int(selection)-1]
 	return selected_link
 
 def character_or_series(search_type, any_all, term):
-	search_terms = input("\n Write a comicbook {}: ".format(term))
-	if search_type=="Volume":
-		wikis = get_wikis(True)
-	elif search_type=="Artist":
-		wikis = get_wikis(False)
-	wiki, link = get_cbseries(wikis, search_type, search_terms, any_all)
+	search_terms = input("\n Write a comicbook {}: ".format(term.upper()))
+	wiki = get_wiki()
+	wiki, link = get_cbseries(wiki, search_type, search_terms, any_all)
 	if not link: return
 	if search_type=="Volume":
 		link = get_cover_type(wiki, link)
@@ -120,7 +110,8 @@ def series():
 	character_or_series("Volume", all, "Series")
 
 def artist():
-	character_or_series("Artist", all, "Artist")					
+	character_or_series("Artist", all, "Artist")
+	
 """UNIVERSAL"""				
 def menu():
 	functions = {}

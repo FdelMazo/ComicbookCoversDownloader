@@ -17,14 +17,11 @@ COMPANIES = {
 	}
 
 	
-def get_wikis(bool):
-	all = "or ALL" if bool else ""
-	company_sel = [input("\n Which company? {} {}: ".format(', '.join(COMPANIES),all)).upper()]
-	while company_sel[0] not in COMPANIES and company_sel[0] != "ALL":
-		company_sel = [input("\n No company with that name. Try again: ".format(', '.join(COMPANIES)))]
-	if bool and company_sel[0] == "ALL": company_sel = COMPANIES
-	wikis = [Wiki_Crawler(comp) for comp in company_sel]
-	return wikis
+def get_wiki():
+	company_sel = input("\n Which company? {}: ".format(', '.join(COMPANIES))).upper()
+	while company_sel not in COMPANIES:
+		company_sel = input("\n No company with that name. Try again: ".format(', '.join(COMPANIES))).upper()
+	return Wiki_Crawler(company_sel)
 
 def request_soup(url):
 	try:
