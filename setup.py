@@ -10,9 +10,11 @@ build_exe_options = {
 	}
 
 setup(  name = "Comicbook Covers Downloader",
-        version = "1.1",
+        version = "1.2",
         description = "Webscraper for Comicbook Wikias to download CB covers",
-        options = {"build_exe": build_exe_options},
-        executables = [Executable("CoversDownloader.py")],
-		author = 'F del Mazo',
-		author_email = 'federicodelmazo@hotmail.com')
+        author = 'F del Mazo',
+		author_email = 'federicodelmazo@hotmail.com',
+		url = 'https://github.com/FdelMazo/ComicbookCovers/releases',
+		options = {"build_exe": build_exe_options},
+        executables = [Executable("CoversDownloader.py")]
+)
