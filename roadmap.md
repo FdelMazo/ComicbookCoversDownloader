@@ -1,35 +1,29 @@
-Project Roadmap
-- [X] Dev Branch con roadmap MD -> copiar e ir tildando
-- [X] Settings borrar lo que no aplica (wiki, issues, projects)
-- [ ] Todo codeado en mismo idioma
-- [ ] roadmap.md readme.md
-- [X] Gitignore
-- [X] Carpeta Releases
+- [ ] Download per artist (fijarse en release 1.2)
 - [ ] Releases: Windows Linux Mac
-- [ ] Makefile/setup.py de build y de use. 
 - [ ] Modos de uso e instalacion: 
 	1. Un binario doble click linux y windows (carpeta releases/binaries) 
-	1. Setup.py que instala el modulo. Solo hay que hacer import y se usa. 
 	1. Terminal: python3 programa -flags... etc
 - [ ] Gifs de como usar 
-- [ ] Documentacion: Readme.md
-	## Installation 
-	### Executable (Windows / Linux / Mac) 
-	### Python script
-	### Python module
-	## Quick Usage
-	### Gifs de todas las formas de usarlo, en todas las plataformas disponibles
-	## Complete Features and options
-	## Contributing
-	## I have a problem! How can I contact you?
-	## Resources Dependencies Links and more
-- [ ] README con badges chetas
-- [ ] Habilitar para todo tipo de ejecuciones las complete features and options
+- [ ] Esperando al user input -> Thread nuevo para ejecutar en el background
 - [ ] Arg Parser:
 	* command_line_arg
-	* --file, --input, --output, --quiet, --verbose, --log, --dry-run, --no-confirm, --all, --directory
 - [ ] Diccionario de flags y que todo reciba eso y diccionario de parametros
-- [ ] Buen manejo de requirements
+- [ ] Logging
 - [ ] Buen project tagline
-- [ ] Jetbrains refactor y code review
+
+# Refactor
+- [ ] SOLID -> Una responsabilidad, no depender de cosas concretas (como bases de datos especificas)
+- [ ] Documentar y respetar contrato -> Firma, precondiciones, postcondiciones, invariantes
+- [ ] Si no se cumplen las precondiciones al principio, lanzar excepcion
+- [ ] Evitar muchos ifs -> polimorfismo
+- [ ] Calcular todo lo posible preciclo
+- [ ] Nombres de funciones son soluciones, no problemas
+- [ ] Nombres de booleanos evaluando a true
+- [ ] Metodos que NO usa el usuario -> _privados
+- [ ] Las clases no funcionan como contenedores de datos, tienen que tener comportamiento independiente
+- [ ] Capturar errores no genericos, todo tiene que estar controlado
+- [ ] Muchos metodos similares, datos sueltos, codigo repetido -> hacer una clase nueva
+- [ ] Minimo acoplamiento (interdependencia) posible
+- [ ] Sin prints sueltos -> Todo print es seguido de algun return True/False o valor y/o es un logging
+- [ ] Jetbrains inspect code
 - [ ] https://refactoring.guru/refactoring y https://refactoring.guru/refactoring
