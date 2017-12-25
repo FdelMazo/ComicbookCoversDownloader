@@ -14,10 +14,23 @@ Currently works with the wikias of: DC, Marvel, Dark Horse, Image, Valiant, Dyna
 * Clone repo `git clone https://github.com/FdelMazo/ComicbookCoversDownloader.git`
 * Install the dependencies `python setup.py install`
 * Execute `python CoversDownloader.py`
+    
+## Complete options (Only when run on terminal):
 
-## Complete Features and options
+`python CoversDownloader.py ["Robin"] -flags` with ["Comicbook Series"] being optional and the -flags being:
+
+* `-h, --help`            Show this help message and exit
+* `-y, --no-confirm`      No confirmation required from you
+* `--dry-run`             Only show what would be done, without modifying files
+* `-l, --log`             Log everything to CoversDownloader.log
+* `-v, --verbose`         Verbose/Debug logging
 
 ## I have a problem! How can I contact you?
 
 The easiest would be for you to describe your problem to me in the [issues](https://github.com/FdelMazo/comicbookcoversdownloader/issues) section. To make it even easier you could replicate your error (search the same covers, etc etc) but this time logging it:
-`Python posterdownloader.py --log`
+`Python CoversDownloader.py --log`
+
+Also see:
+
+* Solicitations downloader: https://gist.github.com/FdelMazo/de6137eef33a27b10183075f356ce741
+* Movie Poster Downloader: https://github.com/FdelMazo/PosterDownloader

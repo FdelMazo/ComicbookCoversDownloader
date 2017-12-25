@@ -1,7 +1,3 @@
-#F del Mazo - initial commit July 2017
-#https://github.com/FdelMazo/
-#federicodelmazo@hotmail.com
-
 import requests
 from bs4 import BeautifulSoup
 import logging
@@ -99,36 +95,4 @@ class Wiki_Crawler:
 					f.write(r.content)
 				print("Downloaded: {}".format(filename))
 				return filename
-		return False	
-		try:
-			soup = request_soup(self.fix_link(img))
-		except ConnectionError as e:
-			print(e)
-			return False
-		url = ""
-		for link in soup.findAll('a',href=True,download=True):
-			if ".jpg" in link.get('href'):
-				url = link.get('href')
-				index = url.index(".jpg") +4
-				url = url[:index]
-				filename = img.split(':')[-1]
-				r = requests.get(url)
-				with open(filename, "wb") as f:
-					f.write(r.content)
-				print("Downloaded: {}".format(filename))
-				return filename
 		return False
-		
-
-def cbr_solicitation_crawler(search_terms, links=[], counter=0):
-	url = "http://www.cbr.com/tag/solicitations/page/{}".format(counter)
-	search_terms = search_terms.lower().strip()
-	soup = request_soup(url)
-
-	for link in soup.findAll('a',title=True,href=True):
-		if all(word in link.get('title').lower() for word in search_terms.split(' ')):
-			return link
-	counter+=1
-	return cbr_solicitation_crawler(search_terms, links, counter)
-		
-		

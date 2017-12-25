@@ -1,7 +1,3 @@
-#F del Mazo - initial commit July 2017
-#https://github.com/FdelMazo/
-#federicodelmazo@hotmail.com
-
 from Wikias import *
 import os
 import shutil
@@ -40,7 +36,7 @@ def get_cover_type(wiki, cbseries, flags):
 	return select_link(possible_links, flags)
 
 def download_series(search_terms=None, flags=None):
-	if not search_terms: search_terms = input("\n Write a comicbook {}: ".format(term.lower()))
+	if not search_terms: search_terms = input("\n Write a comicbook series: ")
 	wiki = get_wiki()
 	possible_links = wiki.category_to_pages(search_terms)
 	wiki, link = select_link(possible_links, flags)

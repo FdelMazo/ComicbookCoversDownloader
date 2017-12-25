@@ -14,7 +14,6 @@ from setuptools import setup
 #     pyinstaller CoversDownloader.py -F -n ComicbookCoversDownloader1.3.exe --specpath Build --distpath Releases --workpath Build
 #	if required: /home/username/.local/bin/pyinstaller aka https://stackoverflow.com/questions/38746462/how-to-correctly-install-pyinstaller 
 
-
 setup(  name = 'Comicbook Covers Downloader',
         version = '1.3',
         description = 'Webscraper for DC, Marvel and more Comicbook Wikias to download CB covers',
