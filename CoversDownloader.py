@@ -76,9 +76,7 @@ def main():
 		logging.basicConfig(level=args.loglevel, format=superformat)
 	else:
 		logging.basicConfig(level=logging.INFO, format='%(message)s')
-
-	logging.warning("Starting...")
-
+	logging.getLogger("requests").setLevel(logging.WARNING)
 	try:
 		wiki, link, images = download_series(args.command_line_series, flags)
 		if link and images: manage(wiki, link, images, flags.get('dry_run'))
