@@ -1,7 +1,3 @@
-#F del Mazo - initial commit July 2017
-#https://github.com/FdelMazo/
-#federicodelmazo@hotmail.com
-
 from setuptools import setup
 # Install with:
 # 	apt-get install python3-pip
@@ -10,7 +6,7 @@ from setuptools import setup
 #	python3 setup.py install
 # To generate executables (post install): 
 #   pip3 install pyinstaller
-#   Cambiar segun version y OS
+#   Change according to version/OS
 #     pyinstaller CoversDownloader.py -F -n ComicbookCoversDownloader1.3.exe --specpath Build --distpath Releases --workpath Build
 #	if required: /home/username/.local/bin/pyinstaller aka https://stackoverflow.com/questions/38746462/how-to-correctly-install-pyinstaller 
 
