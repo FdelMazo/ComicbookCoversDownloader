@@ -3,6 +3,13 @@ Webscraper for DC, Marvel and more Comicbook Wikias to download CB covers.
 
 Currently works with the wikias of: DC, Marvel, Dark Horse, Image, Valiant, Dynamite
 
+---
+
+**This project is entirely dead**. It was one of my first coding projects and mostly a fun exercise around web-scraping but then most wikias changed their layout and I never got around re-writing the code. 😃
+
+---
+
+
 ## Installation
 
 ### Python script:
